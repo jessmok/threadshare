@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.2.1",
     "es6-promise": "^4.2.8",
     "firebase": "^7.14.4",
+    "firebase-tools": "^8.2.0",
     "isomorphic-fetch": "^2.2.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -17,6 +18,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "jest-test": "jest 
+    test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -33,5 +36,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^0.2.1"
   }
 }
