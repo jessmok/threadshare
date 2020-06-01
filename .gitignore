@@ -22,3 +22,8 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+mytest.js
+mytest2.js
+mytest.test.js
+mytest2.test.js
