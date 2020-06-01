@@ -21,7 +21,7 @@ export default function ReplyCreator({ onSubmit }) {
                 <button
                     id="reply-submit"
                     onClick={() => {
-                        const RET = { rContent };
+                        const RET = { content: rContent };
                         console.log(RET);
                         onSubmit(RET);
                         setRContent('');

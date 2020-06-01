@@ -32,7 +32,7 @@ export default function ThreadCreator({ onSubmit }) {
                 <button
                     id="thread-submit"
                     onClick={() => {
-                        const RET = { title, content };
+                        const RET = { title, content, replies: [] };
                         console.log(RET);
                         onSubmit(RET);
                         setTitle('');
