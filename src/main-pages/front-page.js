@@ -7,15 +7,11 @@ import ReplyCreator from '../components/reply-creator';
 
 export default function FrontPage({}) {
     const [threads, setThreads] = useState({
-        count: 1,
-        threads: [
-            { title: 'Fake MF', content: 'Fuck the Knicks.', replies: [] },
-        ],
+        count: 0,
+        threads: [],
     });
-    console.log(threads);
 
     const addReply = ({ index, reply }) => {
-        console.log('Reply log:', index, reply);
         threads.threads
             .filter((thread) => {
                 return index === thread.title;
@@ -39,7 +35,6 @@ export default function FrontPage({}) {
             })}
             <ThreadCreator
                 onSubmit={(newThread) => {
-                    console.log('Submitted', newThread);
                     setThreads({
                         count: threads.count + 1,
                         threads: [...threads.threads, newThread],
