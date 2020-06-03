@@ -10,10 +10,7 @@ import Refresh from '../components/refresh';
 
 const firebaseApp = window.firebaseApp;
 export default function FrontPage({}) {
-    const [threads, setThreads] = useState({
-        count: 0,
-        threads: [],
-    });
+    const [threads, setThreads] = useState([]);
 
     const [loggedIn, setLoggedIn] = useState(false);
     const [refresh, setRefresh] = useState(false);
@@ -35,7 +32,7 @@ export default function FrontPage({}) {
                 RET.replies = basedReplies;
                 return RET;
             });
-            setThreads({ count: basedThreads.length, threads: basedThreads });
+            setThreads(basedThreads);
         };
         getData();
     }, [refresh]);
@@ -89,8 +86,8 @@ export default function FrontPage({}) {
             )}
 
             <h1>LATEST THREADS</h1>
-            {threads && threads.count ? (
-                threads.threads.map((t) => {
+            {threads && threads.length ? (
+                threads.map((t) => {
                     return (
                         <DisplayPage
                             thread={t}
