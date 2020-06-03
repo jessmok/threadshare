@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import ReplyCreator from '../components/reply-creator';
 
-export default function DisplayPage({ thread, addReply, replies }) {
-    const [open, setOpen] = useState(true);
+export default function DisplayPage({ thread, addReply, replies, loggedIn }) {
+    const [open, setOpen] = useState(false);
 
     return (
         <div>
@@ -19,18 +19,21 @@ export default function DisplayPage({ thread, addReply, replies }) {
 
                     {replies &&
                         replies.map((reply) => {
-                            return <div>{reply.content}</div>;
+                            return (
+                                <div key={reply.replyID}>{reply.content}</div>
+                            );
                         })}
 
-                    <ReplyCreator
-                        onSubmit={(newReply) => {
-                            console.log(newReply);
-                            addReply({
-                                index: thread.title,
-                                reply: newReply,
-                            });
-                        }}
-                    />
+                    {loggedIn && (
+                        <ReplyCreator
+                            onSubmit={(newReply) => {
+                                addReply({
+                                    threadID: thread.threadID,
+                                    reply: newReply,
+                                });
+                            }}
+                        />
+                    )}
                 </>
             )}
         </div>
