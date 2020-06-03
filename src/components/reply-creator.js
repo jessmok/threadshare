@@ -22,10 +22,9 @@ export default function ReplyCreator({ onSubmit }) {
                     id="reply-submit"
                     onClick={() => {
                         if (rContent.trim()) {
-                            const RET = { content: rContent };
-
-                            onSubmit(RET);
+                            onSubmit({ content: rContent.trim() });
                             setRContent('');
+                            setOpen(false);
                         }
                     }}
                 >

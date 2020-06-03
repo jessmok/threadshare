@@ -31,10 +31,13 @@ export default function ThreadCreator({ onSubmit }) {
                     id="thread-submit"
                     onClick={() => {
                         if (title.trim() && content.trim()) {
-                            const RET = { title, content, replies: [] };
-                            onSubmit(RET);
+                            onSubmit({
+                                title: title.trim(),
+                                content: content.trim(),
+                            });
                             setTitle('');
                             setContent('');
+                            setOpen(false);
                         }
                     }}
                 >
