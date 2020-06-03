@@ -3,16 +3,15 @@ import React, { useState } from 'react';
 export default function ThreadCreator({ onSubmit }) {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const [open, setOpen] = useState(false);
 
-    //console.log(title);
-    return (
+    return open ? (
         <div className="thread-container">
             <input
                 id="thread-title"
                 placeholder="Thread Title"
                 value={title}
                 onChange={(val) => {
-                    //console.log('val:', val.target.value);
                     setTitle(val.target.value);
                 }}
             />
@@ -23,7 +22,6 @@ export default function ThreadCreator({ onSubmit }) {
                 cols="100"
                 value={content}
                 onChange={(e) => {
-                    //console.log('e:', e.target.value);
                     setContent(e.target.value);
                 }}
             />
@@ -32,17 +30,38 @@ export default function ThreadCreator({ onSubmit }) {
                 <button
                     id="thread-submit"
                     onClick={() => {
-                        const RET = { title, content, replies: [] };
-                        console.log(RET);
-                        onSubmit(RET);
-                        setTitle('');
-                        setContent('');
+                        if (title.trim() && content.trim()) {
+                            onSubmit({
+                                title: title.trim(),
+                                content: content.trim(),
+                            });
+                            setTitle('');
+                            setContent('');
+                            setOpen(false);
+                        }
                     }}
                 >
                     SUBMIT
                 </button>
-                <button id="thread-cancel">CANCEL</button>
+                <button
+                    id="thread-cancel"
+                    onClick={() => {
+                        setOpen(false);
+                        setTitle('');
+                        setContent('');
+                    }}
+                >
+                    CANCEL
+                </button>
             </div>
         </div>
+    ) : (
+        <button
+            onClick={() => {
+                setOpen(true);
+            }}
+        >
+            CREATE THREAD
+        </button>
     );
 }

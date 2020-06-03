@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 const firebaseApp = window.firebaseApp;
 const signIn = ({ email, password, onSignIn }) => {
-    console.log(email, password);
     firebaseApp
         .auth()
         .signInWithEmailAndPassword(email, password)
@@ -19,7 +18,6 @@ const signIn = ({ email, password, onSignIn }) => {
 };
 
 const signUp = ({ email, password, onSignIn }) => {
-    console.log(email, password);
     if (email.length < 4) {
         alert('Please enter an email address.');
         return;
@@ -40,7 +38,6 @@ const signUp = ({ email, password, onSignIn }) => {
             } else {
                 alert(errorMessage);
             }
-            console.log(error);
         });
 };
 

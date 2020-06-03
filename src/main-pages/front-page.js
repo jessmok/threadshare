@@ -5,27 +5,76 @@ import DisplayPage, { ThisMatters } from '../components/display-page';
 import ThreadCreator from '../components/thread-creator';
 import ReplyCreator from '../components/reply-creator';
 import Login from '../components/login';
+import Logout from '../components/logout';
+import Refresh from '../components/refresh';
+
 const firebaseApp = window.firebaseApp;
 export default function FrontPage({}) {
-    const [threads, setThreads] = useState({
-        count: 0,
-        threads: [],
-    });
+    const [threads, setThreads] = useState([]);
 
     const [loggedIn, setLoggedIn] = useState(false);
+    const [refresh, setRefresh] = useState(false);
+
+    useEffect(() => {
+        const getData = async () => {
+            const threadDisplay = await firebaseApp
+                .database()
+                .ref('/threads/')
+                .once('value');
+            const val = threadDisplay.val();
+            const keys = val ? Object.keys(val) : [];
+            const basedThreads = keys.map((threadKey) => {
+                const RET = val[threadKey];
+                const keys = RET.replies ? Object.keys(RET.replies) : [];
+                const basedReplies = keys.map((replyKey) => {
+                    return RET.replies[replyKey];
+                });
+                RET.replies = basedReplies;
+                return RET;
+            });
+            setThreads(basedThreads);
+        };
+        getData();
+    }, [refresh]);
 
     const signIn = ({ user }) => {
         const { email, uid } = user;
         setLoggedIn({ email, uid });
     };
 
-    const addReply = ({ index, reply }) => {
-        threads.threads
-            .filter((thread) => {
-                return index === thread.title;
-            })
-            .pop()
-            .replies.push(reply);
+    const signOut = () => {
+        setLoggedIn(false);
+    };
+
+    const newThread = async (newThread) => {
+        if (loggedIn) {
+            var postsRef = firebaseApp.database().ref('threads');
+
+            var newPostRef = postsRef.push();
+            await newPostRef.set({
+                content: newThread.content,
+                email: loggedIn.email,
+                title: newThread.title,
+                threadID: newPostRef.key,
+            });
+            setRefresh(!refresh);
+        }
+    };
+
+    const addReply = async ({ threadID, reply }) => {
+        if (loggedIn) {
+            var postsRef = firebaseApp
+                .database()
+                .ref(`threads/${threadID}/replies`);
+
+            var newPostRef = postsRef.push();
+            await newPostRef.set({
+                content: reply.content,
+                email: loggedIn.email,
+                replyID: newPostRef.key,
+            });
+            setRefresh(!refresh);
+        }
     };
 
     return (
@@ -33,28 +82,32 @@ export default function FrontPage({}) {
             {!loggedIn ? (
                 <Login onSignIn={signIn} />
             ) : (
-                <>
-                    <h1>LATEST THREADS</h1>
-                    {threads.threads.map((t) => {
-                        return (
-                            <DisplayPage
-                                thread={t}
-                                key={t.title}
-                                addReply={addReply}
-                                replies={t.replies}
-                            />
-                        );
-                    })}
-                    <ThreadCreator
-                        onSubmit={(newThread) => {
-                            setThreads({
-                                count: threads.count + 1,
-                                threads: [...threads.threads, newThread],
-                            });
-                        }}
-                    />
-                </>
+                <Logout onSignOut={signOut} />
             )}
+
+            <h1>LATEST THREADS</h1>
+            {threads && threads.length ? (
+                threads.map((t) => {
+                    return (
+                        <DisplayPage
+                            thread={t}
+                            key={t.title}
+                            addReply={addReply}
+                            replies={t.replies}
+                            loggedIn={loggedIn}
+                        />
+                    );
+                })
+            ) : (
+                <div>No threads :'(</div>
+            )}
+            {loggedIn && <ThreadCreator onSubmit={newThread} />}
+
+            <Refresh
+                onRefresh={() => {
+                    setRefresh(!refresh);
+                }}
+            />
         </div>
     );
 }
