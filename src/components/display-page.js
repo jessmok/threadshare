@@ -5,8 +5,9 @@ export default function DisplayPage({ thread, addReply, replies, loggedIn }) {
     const [open, setOpen] = useState(false);
 
     return (
-        <div>
+        <div className="thread-container">
             <div
+                className="thread-title"
                 onClick={() => {
                     setOpen(!open);
                 }}
@@ -15,12 +16,19 @@ export default function DisplayPage({ thread, addReply, replies, loggedIn }) {
             </div>
             {open && (
                 <>
-                    <div>{thread && thread.content}</div>
+                    <div className="thread-content">
+                        {thread && thread.content}
+                    </div>
 
                     {replies &&
                         replies.map((reply) => {
                             return (
-                                <div key={reply.replyID}>{reply.content}</div>
+                                <div
+                                    className="reply-content"
+                                    key={reply.replyID}
+                                >
+                                    {reply.content}
+                                </div>
                             );
                         })}
 

@@ -43,6 +43,7 @@ export default function ReplyCreator({ onSubmit }) {
         </div>
     ) : (
         <button
+            id="post-reply"
             onClick={() => {
                 setOpen(true);
             }}

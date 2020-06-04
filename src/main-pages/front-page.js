@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import fetch from 'isomorphic-fetch';
-import '../firststyle.css';
 import DisplayPage, { ThisMatters } from '../components/display-page';
 import ThreadCreator from '../components/thread-creator';
 import ReplyCreator from '../components/reply-creator';
@@ -86,21 +85,23 @@ export default function FrontPage({}) {
             )}
 
             <h1>LATEST THREADS</h1>
-            {threads && threads.length ? (
-                threads.map((t) => {
-                    return (
-                        <DisplayPage
-                            thread={t}
-                            key={t.title}
-                            addReply={addReply}
-                            replies={t.replies}
-                            loggedIn={loggedIn}
-                        />
-                    );
-                })
-            ) : (
-                <div>No threads :'(</div>
-            )}
+            <div className="forum-container">
+                {threads && threads.length ? (
+                    threads.map((t) => {
+                        return (
+                            <DisplayPage
+                                thread={t}
+                                key={t.title}
+                                addReply={addReply}
+                                replies={t.replies}
+                                loggedIn={loggedIn}
+                            />
+                        );
+                    })
+                ) : (
+                    <div>No threads :'(</div>
+                )}
+            </div>
             {loggedIn && <ThreadCreator onSubmit={newThread} />}
 
             <Refresh
