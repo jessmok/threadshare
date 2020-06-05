@@ -7,9 +7,10 @@ const signOut = ({ onSignOut }) => {
     onSignOut();
 };
 
-export default function Logout({ onSignOut }) {
+export default function Logout({ onSignOut, email }) {
     return (
         <div>
+            <h4>Welcome, {email}!</h4>
             <button
                 onClick={() => {
                     signOut({ onSignOut });

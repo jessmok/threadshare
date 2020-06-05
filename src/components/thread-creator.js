@@ -38,6 +38,10 @@ export default function ThreadCreator({ onSubmit }) {
                             setTitle('');
                             setContent('');
                             setOpen(false);
+                        } else {
+                            alert(
+                                'Error: invalid thread title/content detected.',
+                            );
                         }
                     }}
                 >

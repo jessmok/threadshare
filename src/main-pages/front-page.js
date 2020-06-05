@@ -6,6 +6,7 @@ import ReplyCreator from '../components/reply-creator';
 import Login from '../components/login';
 import Logout from '../components/logout';
 import Refresh from '../components/refresh';
+import { isAdmin } from '../helpers/firebase';
 
 const firebaseApp = window.firebaseApp;
 export default function FrontPage({}) {
@@ -35,6 +36,18 @@ export default function FrontPage({}) {
         };
         getData();
     }, [refresh]);
+
+    useEffect(() => {
+        const getAdmin = async () => {
+            const admin = await isAdmin({ firebaseApp, uid: loggedIn.uid });
+            if (admin !== loggedIn.admin) {
+                setLoggedIn({ ...loggedIn, admin });
+            }
+        };
+        if (loggedIn) {
+            getAdmin();
+        }
+    }, [loggedIn]);
 
     const signIn = ({ user }) => {
         const { email, uid } = user;
@@ -76,15 +89,60 @@ export default function FrontPage({}) {
         }
     };
 
+    const removeReply = async ({ threadID, replyID }) => {
+        if (loggedIn) {
+            var postsRef = firebaseApp
+                .database()
+                .ref(`threads/${threadID}/replies/${replyID}`);
+
+            await postsRef.remove();
+            setRefresh(!refresh);
+            alert('Reply deleted.');
+        }
+    };
+
+    const removeThread = async ({ threadID }) => {
+        if (loggedIn) {
+            var postsRef = firebaseApp.database().ref(`threads/${threadID}`);
+
+            console.log(threadID);
+            await postsRef.remove();
+            setRefresh(!refresh);
+            alert('Thread deleted.');
+        }
+    };
+
+    const editReply = async ({ threadID, replyID, content }) => {
+        if (loggedIn) {
+            var postsRef = firebaseApp
+                .database()
+                .ref(`threads/${threadID}/replies/${replyID}`);
+
+            await postsRef.update({ content });
+            setRefresh(!refresh);
+            alert('Reply edited.');
+        }
+    };
+
+    const editThread = async ({ threadID, content }) => {
+        if (loggedIn) {
+            var postsRef = firebaseApp.database().ref(`threads/${threadID}`);
+
+            await postsRef.update({ content });
+            setRefresh(!refresh);
+            alert('Thread edited.');
+        }
+    };
+
     return (
         <div>
             {!loggedIn ? (
                 <Login onSignIn={signIn} />
             ) : (
-                <Logout onSignOut={signOut} />
+                <Logout onSignOut={signOut} email={loggedIn.email} />
             )}
 
-            <h1>LATEST THREADS</h1>
+            <h1>CURRENT THREADS</h1>
             <div className="forum-container">
                 {threads && threads.length ? (
                     threads.map((t) => {
@@ -95,6 +153,10 @@ export default function FrontPage({}) {
                                 addReply={addReply}
                                 replies={t.replies}
                                 loggedIn={loggedIn}
+                                removeReply={removeReply}
+                                onEdit={editReply}
+                                removeThread={removeThread}
+                                onThredit={editThread}
                             />
                         );
                     })
