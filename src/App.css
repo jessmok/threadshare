@@ -20,7 +20,7 @@
 }
 
 #thread-content {
-    width: 80%;
+    width: 100%;
 }
 
 #thread-submit {
@@ -77,18 +77,18 @@ body {
 }
 
 .thread-content {
+    width: 100%;
     font-size: 16px;
     font-weight: bold;
     justify-content: flex-start;
     display: flex;
     align-items: flex-start;
-    width: 100%;
     padding: 6px;
     border-top: 1px solid #585858;
     border-bottom: 1px solid #585858;
     background-color: rgba(128, 128, 128, 0.75);
-    border-radius: 5px;
     margin-bottom: 4px;
+    border-radius: 5px;
 }
 
 .reply-container {
@@ -127,8 +127,22 @@ body {
     padding: 0px 12px;
     border-bottom: 1px solid #585858;
     border-radius: 5px;
+    width: 100%;
 }
 
 .author {
     margin-right: 8px;
+}
+
+.author-t {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 8px;
+}
+
+.edit-delete-t {
+    width: 100%;
+    justify-content: right;
+    margin-bottom: 8px;
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReplyCreator from '../components/reply-creator';
 import Reply from './reply';
+import ThreadEdit from './thread-edit';
 
 export default function DisplayPage({
     thread,
@@ -9,10 +10,16 @@ export default function DisplayPage({
     loggedIn,
     removeReply,
     onEdit,
+    removeThread,
+    onThredit,
 }) {
     const [open, setOpen] = useState(false);
     const deleteReply = (replyID) => {
         removeReply({ threadID: thread.threadID, replyID });
+    };
+
+    const deleteThread = () => {
+        removeThread({ threadID: thread.threadID });
     };
 
     return (
@@ -30,6 +37,26 @@ export default function DisplayPage({
                     <div className="thread-content">
                         {thread && thread.content}
                     </div>
+
+                    <div className="author-t">by: {thread.email}</div>
+
+                    {(loggedIn.email == thread.email || loggedIn.admin) && (
+                        <ThreadEdit
+                            threadID={thread.threadID}
+                            canEdit={
+                                loggedIn.email === thread.email ||
+                                loggedIn.admin
+                            }
+                            removeThread={deleteThread}
+                            threadContent={thread.content}
+                            onThredit={(newContent) => {
+                                onThredit({
+                                    threadID: thread.threadID,
+                                    content: newContent,
+                                });
+                            }}
+                        />
+                    )}
 
                     {replies &&
                         replies.map((reply) => {
@@ -53,7 +80,6 @@ export default function DisplayPage({
                                 />
                             );
                         })}
-
                     {loggedIn && (
                         <ReplyCreator
                             onSubmit={(newReply) => {

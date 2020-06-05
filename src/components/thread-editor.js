@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default function ReplyCreator({
+export default function ThreadEditor({
     onSubmit,
     isEdit,
     existingContent,
@@ -10,12 +10,12 @@ export default function ReplyCreator({
     const [open, setOpen] = useState(false);
 
     return open || isEdit ? (
-        <div className="reply-container">
+        <div className="thredit-container">
             <textarea
-                id="reply-content"
-                placeholder="Reply Content"
-                rows="10"
-                cols="50"
+                id="thredit-content"
+                placeholder="Thread Content"
+                rows="15"
+                cols="75"
                 value={rContent}
                 onChange={(e) => {
                     setRContent(e.target.value);
@@ -24,7 +24,7 @@ export default function ReplyCreator({
 
             <div>
                 <button
-                    id="reply-submit"
+                    id="thredit-submit"
                     onClick={() => {
                         if (rContent.trim()) {
                             onSubmit({ content: rContent.trim() });
@@ -34,14 +34,14 @@ export default function ReplyCreator({
                                 onCancel();
                             }
                         } else {
-                            alert('Error: no reply content detected.');
+                            alert('Error: no thread content detected.');
                         }
                     }}
                 >
                     SUBMIT
                 </button>
                 <button
-                    id="reply-cancel"
+                    id="thredit-cancel"
                     onClick={() => {
                         setOpen(false);
                         setRContent('');

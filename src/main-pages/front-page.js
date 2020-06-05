@@ -101,6 +101,17 @@ export default function FrontPage({}) {
         }
     };
 
+    const removeThread = async ({ threadID }) => {
+        if (loggedIn) {
+            var postsRef = firebaseApp.database().ref(`threads/${threadID}`);
+
+            console.log(threadID);
+            await postsRef.remove();
+            setRefresh(!refresh);
+            alert('Thread deleted.');
+        }
+    };
+
     const editReply = async ({ threadID, replyID, content }) => {
         if (loggedIn) {
             var postsRef = firebaseApp
@@ -113,6 +124,16 @@ export default function FrontPage({}) {
         }
     };
 
+    const editThread = async ({ threadID, content }) => {
+        if (loggedIn) {
+            var postsRef = firebaseApp.database().ref(`threads/${threadID}`);
+
+            await postsRef.update({ content });
+            setRefresh(!refresh);
+            alert('Thread edited.');
+        }
+    };
+
     return (
         <div>
             {!loggedIn ? (
@@ -121,7 +142,7 @@ export default function FrontPage({}) {
                 <Logout onSignOut={signOut} email={loggedIn.email} />
             )}
 
-            <h1>LATEST THREADS</h1>
+            <h1>CURRENT THREADS</h1>
             <div className="forum-container">
                 {threads && threads.length ? (
                     threads.map((t) => {
@@ -134,6 +155,8 @@ export default function FrontPage({}) {
                                 loggedIn={loggedIn}
                                 removeReply={removeReply}
                                 onEdit={editReply}
+                                removeThread={removeThread}
+                                onThredit={editThread}
                             />
                         );
                     })
