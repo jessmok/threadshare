@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 
-export default function ReplyCreator({ onSubmit }) {
-    const [rContent, setRContent] = useState('');
+export default function ReplyCreator({
+    onSubmit,
+    isEdit,
+    existingContent,
+    onCancel,
+}) {
+    const [rContent, setRContent] = useState(existingContent || '');
     const [open, setOpen] = useState(false);
 
-    return open ? (
+    return open || isEdit ? (
         <div className="reply-container">
             <textarea
                 id="reply-content"
@@ -25,6 +30,9 @@ export default function ReplyCreator({ onSubmit }) {
                             onSubmit({ content: rContent.trim() });
                             setRContent('');
                             setOpen(false);
+                            if (isEdit) {
+                                onCancel();
+                            }
                         }
                     }}
                 >
@@ -35,6 +43,9 @@ export default function ReplyCreator({ onSubmit }) {
                     onClick={() => {
                         setOpen(false);
                         setRContent('');
+                        if (onCancel) {
+                            onCancel();
+                        }
                     }}
                 >
                     CANCEL

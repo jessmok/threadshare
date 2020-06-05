@@ -84,9 +84,9 @@ body {
     align-items: flex-start;
     width: 100%;
     padding: 6px;
-    border-top: 1px solid #dddddd;
-    border-bottom: 1px solid #dddddd;
-    background-color: rgba(128, 128, 128, 0.445);
+    border-top: 1px solid #585858;
+    border-bottom: 1px solid #585858;
+    background-color: rgba(128, 128, 128, 0.75);
     border-radius: 5px;
     margin-bottom: 4px;
 }
@@ -98,7 +98,7 @@ body {
     justify-content: flex-start;
     width: 100%;
     text-align: left;
-    border-bottom: 1px solid #dddddd;
+    border-bottom: 1px solid #585858;
     padding: 6px;
     background-color: rgba(128, 128, 128, 0.445);
     margin-bottom: 4px;
@@ -113,8 +113,8 @@ body {
 }
 
 .thread-container {
-    background-color: #c0c0c0;
+    background-color: #ffffff6e;
     padding: 0px 12px;
-    border-bottom: 1px solid #dddddd;
+    border-bottom: 1px solid #585858;
     border-radius: 5px;
 }

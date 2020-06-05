@@ -76,12 +76,36 @@ export default function FrontPage({}) {
         }
     };
 
+    const removeReply = async ({ threadID, replyID }) => {
+        if (loggedIn) {
+            var postsRef = firebaseApp
+                .database()
+                .ref(`threads/${threadID}/replies/${replyID}`);
+
+            await postsRef.remove();
+            setRefresh(!refresh);
+            alert('Reply deleted.');
+        }
+    };
+
+    const editReply = async ({ threadID, replyID, content }) => {
+        if (loggedIn) {
+            var postsRef = firebaseApp
+                .database()
+                .ref(`threads/${threadID}/replies/${replyID}`);
+
+            await postsRef.update({ content });
+            setRefresh(!refresh);
+            alert('Reply edited.');
+        }
+    };
+
     return (
         <div>
             {!loggedIn ? (
                 <Login onSignIn={signIn} />
             ) : (
-                <Logout onSignOut={signOut} />
+                <Logout onSignOut={signOut} email={loggedIn.email} />
             )}
 
             <h1>LATEST THREADS</h1>
@@ -95,6 +119,8 @@ export default function FrontPage({}) {
                                 addReply={addReply}
                                 replies={t.replies}
                                 loggedIn={loggedIn}
+                                removeReply={removeReply}
+                                onEdit={editReply}
                             />
                         );
                     })
