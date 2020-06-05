@@ -6,6 +6,7 @@ import ReplyCreator from '../components/reply-creator';
 import Login from '../components/login';
 import Logout from '../components/logout';
 import Refresh from '../components/refresh';
+import { isAdmin } from '../helpers/firebase';
 
 const firebaseApp = window.firebaseApp;
 export default function FrontPage({}) {
@@ -35,6 +36,18 @@ export default function FrontPage({}) {
         };
         getData();
     }, [refresh]);
+
+    useEffect(() => {
+        const getAdmin = async () => {
+            const admin = await isAdmin({ firebaseApp, uid: loggedIn.uid });
+            if (admin !== loggedIn.admin) {
+                setLoggedIn({ ...loggedIn, admin });
+            }
+        };
+        if (loggedIn) {
+            getAdmin();
+        }
+    }, [loggedIn]);
 
     const signIn = ({ user }) => {
         const { email, uid } = user;

@@ -46,6 +46,10 @@ export default function DisplayPage({
                                             content,
                                         });
                                     }}
+                                    canEdit={
+                                        loggedIn.email === reply.email ||
+                                        loggedIn.admin
+                                    }
                                 />
                             );
                         })}

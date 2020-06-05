@@ -91,18 +91,28 @@ body {
     margin-bottom: 4px;
 }
 
+.reply-container {
+    width: 100%;
+}
+
 .reply-content {
     font-size: 16px;
     align-items: flex-start;
     display: flex;
     justify-content: flex-start;
-    width: 100%;
     text-align: left;
     border-bottom: 1px solid #585858;
     padding: 6px;
     background-color: rgba(128, 128, 128, 0.445);
     margin-bottom: 4px;
     border-radius: 5px;
+}
+
+.edit-delete {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 16px;
+    margin-bottom: 8px;
 }
 
 .forum-container {
@@ -117,4 +127,8 @@ body {
     padding: 0px 12px;
     border-bottom: 1px solid #585858;
     border-radius: 5px;
+}
+
+.author {
+    margin-right: 8px;
 }

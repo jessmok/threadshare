@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReplyCreator from './reply-creator';
 
-export default function Reply({ reply, email, removeReply, onEdit }) {
+export default function Reply({ reply, email, removeReply, onEdit, canEdit }) {
     const [editing, setEditing] = useState(false);
 
     return (
@@ -23,24 +23,27 @@ export default function Reply({ reply, email, removeReply, onEdit }) {
                 )}
             </div>
 
-            {email && email === reply.email && (
-                <div className="edit-delete">
-                    <button
-                        onClick={() => {
-                            setEditing(true);
-                        }}
-                    >
-                        E
-                    </button>
-                    <button
-                        onClick={() => {
-                            removeReply(reply.replyID);
-                        }}
-                    >
-                        D
-                    </button>
-                </div>
-            )}
+            <div className="edit-delete">
+                <div className="author">by: {reply.email}</div>
+                {canEdit && (
+                    <>
+                        <button
+                            onClick={() => {
+                                setEditing(true);
+                            }}
+                        >
+                            E
+                        </button>
+                        <button
+                            onClick={() => {
+                                removeReply(reply.replyID);
+                            }}
+                        >
+                            D
+                        </button>
+                    </>
+                )}
+            </div>
         </div>
     );
 }
