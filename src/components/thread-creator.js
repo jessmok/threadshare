@@ -57,6 +57,7 @@ export default function ThreadCreator({ onSubmit }) {
         </div>
     ) : (
         <button
+            id="create-thread"
             onClick={() => {
                 setOpen(true);
             }}
