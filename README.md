@@ -1,5 +1,2 @@
-# Spring307-8amMWF-Team9
-
-## CSC 307 - INTRO TO SOFTWARE ENGINEERING
-
-### MEMBERS: Eric Parella and Jessie Mok
+##Web App features
+* Firebase Login and homepage redirection
