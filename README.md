@@ -1,15 +1,25 @@
-## ThreadShare
+# ThreadShare
 ThreadShare is a collaborative effort to create a basic discussion forum where users can keep up with news and discuss interesting topics with peers. This website currently supports anonymous, authenticated, and administrative users.
 
 To do so, we used Firebase to store thread data and handle authentication features and used React, HTML, JavaScript, and CSS to render the user interface.
 
-### Running the Demo
+## Running the Demo
 
 `npm install`
 
 When dependencies are installed, run:
 
 `react-scripts start`
+
+## Some Things to Try
+
+* Creating an account with your email address
+* Signing in
+* Viewing the current threads
+* Creating a thread
+* Editing the thread
+* Replying to a thread
+* Editing your reply to a thread
 
 ## What Do We Use?
 We use a combination of HTML/CSS, Javascript, and React to run our site. We also use Firebase as the means of authentication and the backend database to store information.
