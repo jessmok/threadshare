@@ -47,7 +47,7 @@ export default function Login({ onSignIn }) {
     return (
         <div>
             <div className="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
-                <h2 className="mdl-card__title-text">Welcome!</h2>
+                <h1 className="mdl-card__title-text">Welcome!</h1>
                 <p>
                     Enter an email and password below and either sign in to an
                     existing account or sign up

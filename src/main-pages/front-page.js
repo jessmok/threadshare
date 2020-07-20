@@ -141,7 +141,8 @@ export default function FrontPage({}) {
             ) : (
                 <Logout onSignOut={signOut} email={loggedIn.email} />
             )}
-
+            <br></br>
+            <br></br>
             <h1>CURRENT THREADS</h1>
             <div className="forum-container">
                 {threads && threads.length ? (
