@@ -2,5 +2,5 @@
 
 ### Running the Demo
 
-`npm install`
-`react-scripts start`
+`npm install
+react-scripts start`
