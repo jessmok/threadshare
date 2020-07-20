@@ -2,5 +2,8 @@
 
 ### Running the Demo
 
-`npm install
-react-scripts start`
+`npm install`
+
+When dependencies are installed, run:
+
+`react-scripts start`
